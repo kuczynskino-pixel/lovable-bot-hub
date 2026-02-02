@@ -1,0 +1,20 @@
+{
+  "name": "hurtownie-vinted-bot",
+  "version": "1.0.0",
+  "description": "Discord bot for managing hurtownie and monitoring Vinted sales",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "register": "node src/register-commands.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "node-cron": "^3.0.3",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
