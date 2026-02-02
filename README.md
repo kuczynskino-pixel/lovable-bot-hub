@@ -1,73 +1,199 @@
-# Welcome to your Lovable project
+# 🏭 Hurtownie & Vinted Sales Bot
 
-## Project info
+Discord bot do zarządzania hurtowniami i monitorowania sprzedaży Vinted.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## ✨ Funkcje
 
-## How can I edit this code?
+### Slash Commands
 
-There are several ways of editing your application.
+| Komenda | Opis |
+|---------|------|
+| `/add-hurtownia` | Dodaj nową hurtownię z kontaktem, cenami, linkami |
+| `/update-hurtownia` | Aktualizuj dane istniejącej hurtowni |
+| `/list-hurtownie` | Paginowana lista wszystkich hurtowni |
+| `/search-hurtownia` | Szukaj hurtowni po nazwie |
+| `/config` | Konfiguracja bota (tylko admin) |
 
-**Use Lovable**
+### Monitoring Vinted
+- Automatyczne sprawdzanie sprzedaży co 15 minut
+- Wsparcie dla wielu kont Vinted
+- Powiadomienia z pingiem roli @sales
+- Tracking statusów: sold → paid → shipped → delivered
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🚀 Setup
 
-Changes made via Lovable will be committed automatically to this repo.
+### 1. Discord Developer Portal
 
-**Use your preferred IDE**
+1. Idź do [Discord Developer Portal](https://discord.com/developers/applications)
+2. Kliknij "New Application"
+3. Nazwij aplikację, np. "Hurtownie Bot"
+4. Przejdź do **Bot** → "Add Bot"
+5. Skopiuj **TOKEN** (będziesz potrzebować)
+6. Włącz **Message Content Intent** w Bot settings
+7. Przejdź do **OAuth2 → URL Generator**:
+   - Scopes: `bot`, `applications.commands`
+   - Bot Permissions: `Send Messages`, `Manage Threads`, `Embed Links`, `Add Reactions`, `Read Message History`
+8. Skopiuj URL i otwórz w przeglądarce aby zaprosić bota
 
-If you want to work locally using your own IDE, you can clone tqhis repo and push changes. Pushed changes will also be reflected in Lovable.
+### 2. Konfiguracja Environment
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Skopiuj `.env.example` do `.env` i wypełnij:
 
-Follow these steps:
+```bash
+cp .env.example .env
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```env
+# Discord
+DISCORD_TOKEN=twoj_bot_token
+DISCORD_CLIENT_ID=id_aplikacji (z General Information)
+DISCORD_GUILD_ID=id_twojego_serwera (PPM na serwer → Kopiuj ID)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Kanały (opcjonalne - można ustawić przez /config)
+HURTOWNIE_CHANNEL_ID=
+SALES_CHANNEL_ID=
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Role (opcjonalne - można ustawić przez /config)
+ADMIN_ROLE_ID=
+EDITOR_ROLE_ID=
+SALES_PING_ROLE_ID=
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Vinted (format: nazwa:token,nazwa2:token2)
+VINTED_ACCOUNTS=PL_Main:abc123token,PL_Second:xyz789token
+```
+
+### 3. Instalacja i uruchomienie
+
+```bash
+# Instalacja zależności
+npm install
+
+# Rejestracja komend slash (jednorazowo)
+npm run register
+
+# Uruchomienie bota
+npm start
+
+# Lub w trybie development (auto-reload)
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 🚂 Deploy na Railway
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+1. Utwórz nowy projekt na [Railway](https://railway.app)
+2. Połącz z GitHub repo
+3. Dodaj environment variables z `.env`
+4. Railway automatycznie uruchomi `npm start`
 
-**Use GitHub Codespaces**
+### railway.json (opcjonalne)
+```json
+{
+  "build": {
+    "builder": "NIXPACKS"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📦 Deploy na Render
 
-## What technologies are used for this project?
+1. Utwórz nowe "Background Worker" na [Render](https://render.com)
+2. Połącz z GitHub repo
+3. Build Command: `npm install`
+4. Start Command: `npm start`
+5. Dodaj environment variables
 
-This project is built with:
+## 🔧 Konfiguracja przez Discord
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Po uruchomieniu bota, użyj `/config` (wymaga admin):
 
-## How can I deploy this project?
+```
+/config hurtownie-channel #hurtownie
+/config sales-channel #vinted-sales
+/config sales-role @sales
+/config admin-role @admin
+/config editor-role @edytor
+/config vinted-accounts name:PL_Main token:abc123
+/config show
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 📖 Użycie komend
 
-## Can I connect a custom domain to my Lovable project?
+### Dodawanie hurtowni
+```
+/add-hurtownia nazwa:ABC Hurt kontakt:hurt@abc.pl telefon:+48123456789 ceny:"butelka=50zł, koszulka=30zł" link:https://katalog.abc.pl notatki:Szybka wysyłka
+```
 
-Yes, you can!
+### Aktualizacja ceny
+```
+/update-hurtownia nazwa:ABC Hurt pole:cena-butelka=55zł
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Aktualizacja kontaktu
+```
+/update-hurtownia nazwa:ABC Hurt pole:kontakt=nowy@email.pl
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Szukanie
+```
+/search-hurtownia ABC
+```
+
+## 🛍️ Vinted API
+
+Bot używa Vinted Pro API. Potrzebujesz:
+1. Konta Vinted Pro
+2. Token API (z ustawień konta lub OAuth)
+
+Endpoint: `GET /api/v2/orders/sold`
+
+Tokeny można dodać przez:
+- ENV: `VINTED_ACCOUNTS=nazwa:token`
+- Discord: `/config vinted-accounts name:nazwa token:twoj_token`
+
+## 📁 Struktura projektu
+
+```
+discord-bot/
+├── src/
+│   ├── commands/
+│   │   ├── add-hurtownia.js
+│   │   ├── update-hurtownia.js
+│   │   ├── list-hurtownie.js
+│   │   ├── search-hurtownia.js
+│   │   └── config.js
+│   ├── services/
+│   │   ├── config-store.js
+│   │   └── vinted-monitor.js
+│   ├── utils/
+│   │   ├── permissions.js
+│   │   └── hurtownia-finder.js
+│   ├── index.js
+│   └── register-commands.js
+├── data/
+│   └── config.json
+├── .env.example
+├── package.json
+└── README.md
+```
+
+## ❓ FAQ
+
+**Q: Komendy nie pojawiają się na serwerze?**  
+A: Uruchom `npm run register`. Dla komend guild chwilę, globalne do 1h.
+
+**Q: Bot nie odpowiada?**  
+A: Sprawdź czy TOKEN jest poprawny i Message Content Intent włączony.
+
+**Q: Jak pobrać ID kanału/roli?**  
+A: Włącz Developer Mode w Discord (Ustawienia → Zaawansowane), PPM → Kopiuj ID.
+
+**Q: Vinted nie działa?**  
+A: Sprawdź czy token jest aktualny. Vinted może wymagać odświeżenia tokenów.
+
+## 📄 Licencja
+
+MIT
