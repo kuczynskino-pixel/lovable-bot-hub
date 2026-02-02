@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hurtownie & Vinted Bot</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+      }
+      .container {
+        text-align: center;
+        padding: 2rem;
+        max-width: 600px;
+      }
+      .logo { font-size: 4rem; margin-bottom: 1rem; }
+      h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+      .subtitle { color: #94a3b8; font-size: 1.2rem; margin-bottom: 2rem; }
+      .features {
+        display: grid;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        text-align: left;
+      }
+      .feature {
+        background: rgba(255,255,255,0.05);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+      .feature-title { font-weight: 600; margin-bottom: 0.25rem; }
+      .feature-desc { color: #94a3b8; font-size: 0.9rem; }
+      .btn {
+        display: inline-block;
+        background: #5865f2;
+        color: #fff;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+      .btn:hover { background: #4752c4; }
+      .info {
+        margin-top: 2rem;
+        padding: 1rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        color: #94a3b8;
+      }
+      code {
+        background: rgba(0,0,0,0.3);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">🏭</div>
+      <h1>Hurtownie & Vinted Bot</h1>
+      <p class="subtitle">Discord bot do zarządzania hurtowniami i monitorowania sprzedaży Vinted</p>
+      
+      <div class="features">
+        <div class="feature">
+          <div class="feature-title">📦 Zarządzanie Hurtowniami</div>
+          <div class="feature-desc">Dodawaj, edytuj i przeszukuj bazę hurtowni z cenami i kontaktami</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">🛍️ Monitoring Vinted</div>
+          <div class="feature-desc">Automatyczne powiadomienia o nowych sprzedażach z wielu kont</div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">⚡ Slash Commands</div>
+          <div class="feature-desc">/add-hurtownia, /list-hurtownie, /search-hurtownia, /config</div>
+        </div>
+      </div>
+      
+      <a href="https://railway.app" target="_blank" class="btn">Deploy na Railway →</a>
+      
+      <div class="info">
+        <p><strong>⚠️ To jest strona informacyjna.</strong></p>
+        <p>Bot wymaga Node.js i musi być uruchomiony na serwerze (Railway, Render, VPS).</p>
+        <p style="margin-top: 0.5rem">Kod bota: <code>src/</code> | Instrukcja: <code>README.md</code></p>
+      </div>
+    </div>
+  </body>
+</html>
